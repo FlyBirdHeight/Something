@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $data = json_encode(array("person"=>[['name'=>"ljq","age"=>20,"sex"=>"man","love"=>"fxq"],['name'=>"fxq","age"=>20,"sex"=>"female"]]));
+    return $data;
 });
