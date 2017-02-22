@@ -12,6 +12,11 @@
 */
 
 Route::get('/', function () {
-    $data = json_encode(array("person"=>[['name'=>"ljq","age"=>20,"sex"=>"man","love"=>"fxq"],['name'=>"fxq","age"=>20,"sex"=>"female"]]));
-    return $data;
+    return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('email/verify/{token}',['as' => 'email.verify','user' => 'EmailController@verify']);
