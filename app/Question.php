@@ -19,4 +19,5 @@ class Question extends Model
         return $this->belongsToMany(Topic::class)->withTimestamps();
         //如果表明不是question_topic则return $this->belongsToMany(Topic::class,'your table name')->withTimestamps();
     }
+
 }

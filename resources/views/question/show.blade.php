@@ -10,16 +10,19 @@
         text-decoration: none;
         margin: 0 5px 5px 0;
         display: inline-block;
+        vertical-align: top;
         white-space: nowrap;
         cursor: pointer;
     }
-
     .topic:hover{
         background: #259;
         color: #fff;
         text-decoration: none;
     }
-
+    .action{
+        display: flex;
+        padding: 10px 20px;
+    }
 </style>
 @section('content')
     @include('vendor.ueditor.assets')
@@ -28,13 +31,18 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3>{{$question->title}}</h3></br>
+                        {{$question->title}}
                         @foreach($question->topics as $topic)
                             <a class="topic" href="/topic/{{$topic->id}}">{{$topic->name}}</a>
                         @endforeach
                     </div>
                     <div class="panel-body">
                         {!! $question->body !!}
+                    </div>
+                    <div class="action">
+                        @if(Auth::check()&&Auth::user()->owns($question))
+                            <span class="edit"> <a href="/questions/{{$question->id}}/edit">编辑</a></span>
+                        @endif
                     </div>
                 </div>
             </div>
