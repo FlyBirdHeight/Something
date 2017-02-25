@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,14 +43,21 @@ class QuestionsController extends Controller
     {
         $rules = [
             'title'=> 'required|between:6,196',
-            'body' => 'required|min:26'
+            'content' => 'required|min:26'
         ];
-        $this->validate($request,$rules);
+        $message = [
+            'title.required' => '标题不能为空！',
+            'title.between' =>'标题在6-196个字符之间！',
+            'content.required'=>'问题内容不能为空',
+            'content.min' => '问题内容要大于26个字符'
+        ];
+        $this->validate($request,$rules,$message);
         $data = [
             'title'=>$request->get('title'),
             'body'=> $request->get('content'),
             'user_id'=>Auth::id(),
         ];
+
         $question = Question::create($data);
         return redirect()->route('question.show',[$question->id]);
     }

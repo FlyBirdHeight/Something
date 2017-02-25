@@ -1,4 +1,9 @@
 @extends('layouts.app')
+<style>
+    .panel-body img{
+        width: 100%;
+    }
+</style>
 @section('content')
     @include('vendor.ueditor.assets')
     <div class="container">
