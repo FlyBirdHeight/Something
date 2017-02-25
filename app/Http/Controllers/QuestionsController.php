@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Question;
+use App\Repositories\QuestionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
-    public function __construct()
+    protected $questionRepository;
+    public function __construct(QuestionRepository $questionRepository)
     {
         $this->middleware('auth')->except(['index','show']);
+        $this->questionRepository = $questionRepository;
     }
 
     /**
@@ -41,6 +43,7 @@ class QuestionsController extends Controller
      */
     public function store(Request $request)
     {
+        $topics = $this->questionRepository->normalizeTopic($request->get('topics'));
         $rules = [
             'title'=> 'required|between:6,196',
             'content' => 'required|min:26'
@@ -57,8 +60,9 @@ class QuestionsController extends Controller
             'body'=> $request->get('content'),
             'user_id'=>Auth::id(),
         ];
-
-        $question = Question::create($data);
+        $question = $this->questionRepository->createQuestion($data);
+        //进行多对多关系关联（可以直接对数组进行操作）
+        $question->topics()->attach($topics);
         return redirect()->route('question.show',[$question->id]);
     }
 
@@ -70,7 +74,8 @@ class QuestionsController extends Controller
      */
     public function show($id)
     {
-        $question = Question::find($id);
+        $question = $this->questionRepository->byIdWithTopics($id);
+        //dd(json_encode($question));
         return view('question.show',compact('question'));
     }
 
@@ -107,4 +112,5 @@ class QuestionsController extends Controller
     {
         //
     }
+
 }
