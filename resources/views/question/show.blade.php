@@ -35,7 +35,7 @@
     @include('vendor.ueditor.assets')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{$question->title}}
@@ -58,7 +58,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2>{{$question->followers_count}}</h2>
+                        <span>关注者</span>
+                    </div>
+                    <div class="panel-body">
+                        <a href="/questions/{{$question->id}}/follow" class="btn btn-default">
+                            关注该问题
+                        </a>
+                        <a href="#editor" class="btn btn-success">撰写答案</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         {{$question->answers_count}}个答案
@@ -81,8 +95,8 @@
                                 </div>
                             </div>
                         @endforeach
-
-                        <form method="post" action="/questions/{{$question->id}}/answer">
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            <form method="post" action="/questions/{{$question->id}}/answer">
                             {!! csrf_field() !!}
                             <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
                                 <script id="editor" style="height:120px" name="content" type="text/plain">
@@ -98,6 +112,9 @@
                                 提交答案
                             </button>
                         </form>
+                        @else
+                            <a href="/login" class="btn btn-info pull-right">前往登陆</a>
+                        @endif
                     </div>
                 </div>
             </div>
