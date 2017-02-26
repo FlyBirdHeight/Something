@@ -14,9 +14,9 @@ use App\Topic;
 
 class QuestionRepository
 {
-    public function byIdWithTopics($id){
+    public function byIdWithTopicsAndAnswers($id){
         //with可以获取到多对多关联的数据放置在$question中！
-        return Question::where('id',$id)->with('topics')->first();
+        return Question::where('id',$id)->with('topics','answers')->first();
     }
 
     public function createQuestion(array $data){
