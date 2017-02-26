@@ -37,4 +37,8 @@ class QuestionRepository
     public function byId($id){
         return Question::find($id);
     }
+
+    public function getAllQuestions(){
+        return Question::published()->latest('updated_at')->with('user')->get();
+    }
 }

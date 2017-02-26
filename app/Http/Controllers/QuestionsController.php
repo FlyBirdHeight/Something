@@ -23,7 +23,8 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //
+        $questions = $this->questionRepository->getAllQuestions();
+        return view('question.index',compact('questions'));
     }
 
     /**
