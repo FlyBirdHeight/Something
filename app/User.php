@@ -44,4 +44,8 @@ class User extends Authenticatable
             $message->to($this->email);
         });
     }
+
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
 }

@@ -49,7 +49,7 @@
                     <div class="action">
                         @if(Auth::check()&&Auth::user()->owns($question))
                             <span class="edit"> <a href="/questions/{{$question->id}}/edit">编辑</a></span>
-                            <form action="/questions/{{$question->id}}" method="post">
+                            <form action="/questions/{{$question->id}}" method="post" style="margin-left: 18px">
                                 {{method_field('DELETE')}}
                                 {{csrf_field()}}
                                 <button class="btn is-naked">删除</button>
