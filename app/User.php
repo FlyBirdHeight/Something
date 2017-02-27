@@ -48,4 +48,17 @@ class User extends Authenticatable
     public function answers(){
         return $this->hasMany(Answer::class);
     }
+
+    public function follows(){
+        return $this->belongsToMany(Question::class,'user_question')->withTimestamps();
+    }
+
+    public function followThis($question){
+        //去绑定相关数据（填入中间表），数据库中不用有就创建，否则就删除,一般用在多对多中
+        return $this->follows()->toggle($question);
+    }
+
+    public function followed($question){
+        return !! $this->follows()->where('question_id',$question)->count();
+    }
 }

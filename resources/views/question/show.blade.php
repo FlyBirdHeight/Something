@@ -30,6 +30,9 @@
         padding: 0;
         height: auto;
     }
+    .question-follow{
+        text-align: center;
+    }
 </style>
 @section('content')
     @include('vendor.ueditor.assets')
@@ -60,15 +63,15 @@
             </div>
             <div class="col-md-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h2>{{$question->followers_count}}</h2>
+                    <div class="panel-heading question-follow">
+                        <h2>{{$question->follower_count}}</h2>
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
-                        <a href="/questions/{{$question->id}}/follow" class="btn btn-default">
-                            关注该问题
+                        <a href="/questions/{{$question->id}}/follow" class="btn btn-default {{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'btn-success':''}}">
+                            {{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'已关注该问题':'关注该问题'}}
                         </a>
-                        <a href="#editor" class="btn btn-success">撰写答案</a>
+                        <a href="#editor" class="btn btn-info pull-right ">撰写答案</a>
                     </div>
                 </div>
             </div>

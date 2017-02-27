@@ -15,6 +15,10 @@ class Question extends Model
         return $this->hasMany(Answer::class);
     }
 
+    public function followers(){
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
     public function topics()
     {
         return $this->belongsToMany(Topic::class)->withTimestamps();
