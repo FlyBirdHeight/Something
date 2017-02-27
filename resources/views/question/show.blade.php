@@ -68,9 +68,10 @@
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
-                        <a href="/questions/{{$question->id}}/follow" class="btn btn-default {{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'btn-success':''}}">
-                            {{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'已关注该问题':'关注该问题'}}
-                        </a>
+                        {{--<a href="/questions/{{$question->id}}/follow" class="btn btn-default {{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'btn-success':''}}">--}}
+                            {{--{{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'已关注该问题':'关注该问题'}}--}}
+                        {{--</a>--}}
+                        <question-follow-button :question="{{$question->id}}" :user="{{\Illuminate\Support\Facades\Auth::id()}}"></question-follow-button>
                         <a href="#editor" class="btn btn-info pull-right ">撰写答案</a>
                     </div>
                 </div>
