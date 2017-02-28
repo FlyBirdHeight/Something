@@ -24,9 +24,11 @@ Route::middleware('api')->get('/topics',function (Request $request){
    return $topics;
 });
 
-Route::middleware('api')->post('/question/follower', function (Request $request) {
+Route::middleware('auth:api')->post('/question/follower', function (Request $request) {
+    //这玩意能够防止有心的用户恶意的多次请求，通过登陆进来的用的api来获取用户的资料！
+    $user = \Illuminate\Support\Facades\Auth::guard('api')->user();
     $follow = !! \App\Follow::where('question_id',$request->get('question'))
-                            ->where('user_id',$request->get('user'))
+                            ->where('user_id',$user->id)
                             ->count();
     if($follow){
         return response()->json(['followed' => true]);
@@ -34,19 +36,18 @@ Route::middleware('api')->post('/question/follower', function (Request $request)
     return response()->json(['followed' => false]);
 });
 
-Route::middleware('api')->post('/question/follow', function (Request $request) {
+Route::middleware('auth:api')->post('/question/follow', function (Request $request) {
+    $user = \Illuminate\Support\Facades\Auth::guard('api')->user();
     $follow = \App\Follow::where('question_id',$request->get('question'))
-        ->where('user_id',$request->get('user'))
+        ->where('user_id',$user->id)
         ->first();
     if($follow !== null){
         $follow->delete();
         return response()->json(['followed' => false]);
     }
-//    \Illuminate\Support\Facades\Auth::user()->followThis($request->get('question'));
     \App\Follow::create([
-        'user_id' => $request->get('user'),
+        'user_id' => $user->id,
         'question_id' => $request->get('question')
     ]);
     return response()->json(['followed' => true]);
-//    return response()->json(['question' => request('question')]);
 });

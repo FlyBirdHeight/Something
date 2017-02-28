@@ -17,6 +17,7 @@
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        Laravel.apiToken = "{{\Illuminate\Support\Facades\Auth::check()?'Bearer '.\Illuminate\Support\Facades\Auth::user()->api_token:'Bearer '}}"
     </script>
 </head>
 <body>
