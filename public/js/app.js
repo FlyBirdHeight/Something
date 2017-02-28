@@ -12178,9 +12178,15 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
-    staticClass: "btn btn-default",
+    staticClass: "btn btn-default pull-left",
+    class: {
+      'btn-success': _vm.followed
+    },
     domProps: {
       "textContent": _vm._s(_vm.text)
+    },
+    on: {
+      "click": _vm.follow
     }
   })
 },staticRenderFns: []}
@@ -40340,12 +40346,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: ['question', 'user'],
     mounted: function mounted() {
+        var _this = this;
+
         axios.post('/api/question/follower', { 'question': this.question, 'user': this.user }).then(function (response) {
-            console.log(response.data);
+            _this.followed = response.data.followed;
         });
     },
     data: function data() {
@@ -40357,6 +40370,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         text: function text() {
             return this.followed ? '已关注该问题' : '关注该问题';
+        }
+    },
+    methods: {
+        follow: function follow() {
+            var _this2 = this;
+
+            axios.post('/api/question/follow', { 'question': this.question, 'user': this.user }).then(function (response) {
+                _this2.followed = response.data.followed;
+            });
         }
     }
 };
