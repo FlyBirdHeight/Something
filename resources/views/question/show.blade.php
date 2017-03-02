@@ -26,12 +26,21 @@
     .is-naked{
         background: 0 0;
         border: none;
-        border-radius: 0;
+        border-radius: 10px;
         padding: 0;
         height: auto;
     }
     .question-follow{
         text-align: center;
+    }
+    .user-statics , .user-actions{
+        margin-top: 20px;
+    }
+    .user-statics {
+        display: flex;
+    }
+    .statics-item {
+        padding: 2px 20px;
     }
 </style>
 @section('content')
@@ -51,11 +60,11 @@
                     </div>
                     <div class="action">
                         @if(Auth::check()&&Auth::user()->owns($question))
-                            <span class="edit"> <a href="/questions/{{$question->id}}/edit">编辑</a></span>
+                            <span class="edit"> <a class="btn btn-default" href="/questions/{{$question->id}}/edit">编辑</a></span>
                             <form action="/questions/{{$question->id}}" method="post" style="margin-left: 18px">
                                 {{method_field('DELETE')}}
                                 {{csrf_field()}}
-                                <button class="btn is-naked">删除</button>
+                                <button class="btn btn-default is-naked">删除</button>
                             </form>
                         @endif
                     </div>
@@ -68,9 +77,6 @@
                         <span>关注者</span>
                     </div>
                     <div class="panel-body">
-                        {{--<a href="/questions/{{$question->id}}/follow" class="btn btn-default {{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'btn-success':''}}">--}}
-                            {{--{{\Illuminate\Support\Facades\Auth::user()->followed($question->id)?'已关注该问题':'关注该问题'}}--}}
-                        {{--</a>--}}
                         <question-follow-button :question="{{$question->id}}"></question-follow-button>
                         <a href="#editor" class="btn btn-info pull-right ">撰写答案</a>
                     </div>
@@ -119,6 +125,41 @@
                         @else
                             <a href="/login" class="btn btn-info pull-right">前往登陆</a>
                         @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading question-follow">
+                        <h2>关于作者</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img src="{{$question->user->avatar}}" alt="{{$question->user->name}}" width="36">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="#">{{$question->user->name}}</a>
+                                </h4>
+                            </div>
+                            <div class="user-statics">
+                                <div class="statics-item text-center">
+                                    <div class="statics-text">问题</div>
+                                    <div class="statics-count">{{$question->user->questions_count}}</div>
+                                </div>
+                                <div class="statics-item text-center">
+                                    <div class="statics-text">回答</div>
+                                    <div class="statics-count">{{$question->user->answers_count}}</div>
+                                </div>
+                                <div class="statics-item text-center">
+                                    <div class="statics-text">关注者</div>
+                                    <div class="statics-count">{{$question->user->followers_count}}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
