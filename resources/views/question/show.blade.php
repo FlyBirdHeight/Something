@@ -160,6 +160,8 @@
                                 </div>
                             </div>
                         </div>
+                        <user-follow-button :user="{{$question->user_id}}"></user-follow-button>
+                        <a href="#editor" class="btn btn-info pull-right ">发送私信</a>
                     </div>
                 </div>
             </div>

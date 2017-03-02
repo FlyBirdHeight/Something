@@ -24,7 +24,7 @@ class StoreAnswerRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|min:26'
+            'content' => 'required|min:10'
         ];
     }
 
@@ -32,7 +32,7 @@ class StoreAnswerRequest extends FormRequest
     {
         return [
             'content.required'=>'答案内容不能为空',
-            'content.min' => '答案内容要大于26个字符'
+            'content.min' => '答案内容要大于10个字符'
         ];
     }
 }
