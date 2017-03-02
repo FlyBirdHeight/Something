@@ -12,8 +12,7 @@
         props:['user'],
         mounted() {
             axios.get('/api/user/followers/'+this.user).then(response => {
-                console.log(response)
-                //this.followed = response.data.followed;
+               this.followed = response.data.followed;
             })
         },
         data() {

@@ -41661,9 +41661,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = {
     props: ['user'],
     mounted: function mounted() {
+        var _this = this;
+
         axios.get('/api/user/followers/' + this.user).then(function (response) {
-            console.log(response);
-            //this.followed = response.data.followed;
+            _this.followed = response.data.followed;
         });
     },
     data: function data() {
@@ -41679,11 +41680,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         follow: function follow() {
-            var _this = this;
+            var _this2 = this;
 
             axios.post('/api/user/follow', { 'user': this.user }).then(function (response) {
                 //console.log(response);
-                _this.followed = response.data.followed;
+                _this2.followed = response.data.followed;
             });
         }
     }
