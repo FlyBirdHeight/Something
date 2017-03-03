@@ -33,20 +33,21 @@ class NewUserFollowNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database',SendcloudChannel::class];
+        return ['database'];
+//        ,SendcloudChannel::class
     }
 
 
-    public function toSendcloud($notifiable){
-        $data = ['url' => 'http://127.0.0.1:8000/notifications','name'=> Auth::guard('api')->user()->name];
-        $template = new SendCloudTemplate('zhihu_app_new_user_follow', $data);
-
-        Mail::raw($template, function ($message) use ($notifiable){
-            $message->from('adsionli@foxmail.com', 'Laravel');
-
-            $message->to($notifiable->email);
-        });
-    }
+//    public function toSendcloud($notifiable){
+//        $data = ['url' => 'http://127.0.0.1:8000/notifications','name'=> Auth::guard('api')->user()->name];
+//        $template = new SendCloudTemplate('zhihu_app_new_user_follow', $data);
+//
+//        Mail::raw($template, function ($message) use ($notifiable){
+//            $message->from('adsionli@foxmail.com', 'Laravel');
+//
+//            $message->to($notifiable->email);
+//        });
+//    }
 
     public function toDatabase($notifiable){
         return [
