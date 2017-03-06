@@ -13,11 +13,11 @@ use Naux\Mail\SendCloudTemplate;
 
 class Mailer
 {
-    public function sendTo($template,array $data,$email){
-        $data = ['url' => route('password.reset'), 'name'=>Auth::guard('api')->user()->name];
-        $template = new SendCloudTemplate($template, $data);
+    public function sendTo($template,$email,array $data){
+        //$data = ['url' => route('password.reset'), 'name'=>Auth::guard('api')->user()->name];
+        $content = new SendCloudTemplate($template, $data);
 
-        Mail::raw($template, function ($message) use ($email){
+        Mail::raw($content, function ($message) use ($email){
             $message->from('adsionli@foxmail.com', 'Laravel');
 
             $message->to($email);
