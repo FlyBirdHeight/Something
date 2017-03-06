@@ -67,4 +67,12 @@ class User extends Authenticatable
     public function followThisUser($user){
         return $this->followers()->toggle($user);
     }
+
+    public function votes(){
+        return $this->belongsToMany(Answer::class,'votes')->withTimestamps();
+    }
+
+    public function voteThis($answer){
+        return $this->votes()->toggle($answer);
+    }
 }
