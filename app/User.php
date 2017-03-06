@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mailer\UserMailer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,14 +36,7 @@ class User extends Authenticatable
     }
 
     public function sendPasswordResetNotification($token){
-        $data = ['url' => route('password.reset', $token)];
-        $template = new SendCloudTemplate('welcome', $data);
-
-        Mail::raw($template, function ($message){
-            $message->from('adsionli@foxmail.com', 'Laravel');
-
-            $message->to($this->email);
-        });
+        (new UserMailer())->passwordReset($token,$this->email);
     }
 
     public function answers(){
