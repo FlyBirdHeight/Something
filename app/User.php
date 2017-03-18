@@ -75,4 +75,8 @@ class User extends Authenticatable
     public function voteThis($answer){
         return $this->votes()->toggle($answer);
     }
+
+    public function hasVotedFor($answer){
+        return !! $this->votes()->where('answer_id',$answer)->count();
+    }
 }

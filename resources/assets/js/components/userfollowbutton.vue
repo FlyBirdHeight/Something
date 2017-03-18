@@ -11,9 +11,12 @@
     export default{
         props:['user'],
         mounted() {
+            //console.log(this.user);
             axios.get('/api/user/followers/'+this.user).then(response => {
-               this.followed = response.data.followed;
+                //console.log(response.data);
+                this.followed = response.data.followed;
             })
+
         },
         data() {
             return {
@@ -27,9 +30,8 @@
         },
         methods: {
             follow() {
-                 axios.post('/api/user/follow',{'user':this.user}).then(response => {
-                    //console.log(response);
-                    this.followed = response.data.followed;
+                 axios.post('/api/user/follow/user',{'user':this.user}).then(response => {
+                     this.followed = response.data.followed;
                 })
             }
         }

@@ -24,7 +24,6 @@ class FollowersController extends Controller
         if(in_array(Auth::guard('api')->user()->id,$followers)){
             return response()->json(['followed'=>true]);
         }
-
         return response()->json(['followed'=>false]);
     }
 

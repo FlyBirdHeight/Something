@@ -59,7 +59,7 @@
                         {!! $question->body !!}
                     </div>
                     <div class="action">
-                        @if(Auth::check()&&Auth::user()->owns($question))
+                        @if(\Illuminate\Support\Facades\Auth::check()&&\Illuminate\Support\Facades\Auth::user()->owns($question))
                             <span class="edit"> <a class="btn btn-default" href="/questions/{{$question->id}}/edit">编辑</a></span>
                             <form action="/questions/{{$question->id}}" method="post" style="margin-left: 18px">
                                 {{method_field('DELETE')}}
@@ -135,12 +135,12 @@
                     </div>
                     <div class="panel-body">
                         <div class="media">
-                            <div class="media-left">
+                            <div style="display: inline-block;padding-left: 15px">
                                 <a href="#">
-                                    <img src="{{$question->user->avatar}}" alt="{{$question->user->name}}" width="36">
+                                    <img src="{{$question->user->avatar}}" alt="{{$question->user->name}}" width="36" style="width: 36px;height: 36px;">
                                 </a>
                             </div>
-                            <div class="media-body">
+                            <div style="display: inline-block;padding-left: 25px">
                                 <h4 class="media-heading">
                                     <a href="#">{{$question->user->name}}</a>
                                 </h4>

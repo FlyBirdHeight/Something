@@ -50,9 +50,10 @@ Route::middleware('auth:api')->post('/question/follow', function (Request $reque
     return response()->json(['followed' => true]);
 });
 
-Route::get('/user/followers/{id}','FollowersController@index');
 
-Route::post('/user/follow','FollowersController@follow');
+Route::middleware('auth:api')->get('/user/followers/{id}','FollowersController@index');
 
-Route::get('/user/votes/{id}','VotesController@index');
+Route::middleware('auth:api')->post('/user/follow/user','FollowersController@follow');
+
+Route::post('/user/votes/{id}','VotesController@index');
 Route::post('/user/vote','VotesController@vote');

@@ -1,9 +1,9 @@
 <template>
     <button
-            class="btn btn-default pull-left"
+            class="btn btn-default"
             v-text="text"
-            v-on:click="follow"
-            v-bind:class="{'btn-success': followed}"
+            v-on:click="vote"
+            v-bind:class="{'btn-primary': voted}"
     ></button>
 </template>
 
@@ -11,8 +11,12 @@
     export default{
         props:['answer'],
         mounted() {
-            axios.get('/api/user/votes/'+this.answer).then(response => {
-               this.voted = response.data.voted;
+//            axios.get('/api/user/votes/'+this.answer).then(response => {
+//               this.voted = response.data.voted;
+//            })
+            console.log(this.answer);
+            axios.post('/api/user/votes/'+this.answer).then(response => {
+                this.voted = response.data.voted;
             })
         },
         data() {
@@ -26,9 +30,8 @@
             }
         },
         methods: {
-            follow() {
-                 axios.post('/api/user/vote',{'answer':answer}).then(response => {
-                    //console.log(response);
+            vote() {
+                axios.post('/api/user/vote',{'answer':this.answer}).then(response => {
                     this.voted = response.data.voted;
                 })
             }
