@@ -9,12 +9,8 @@
 
 <script>
     export default{
-        props:['answer'],
+        props:['answer','count'],
         mounted() {
-//            axios.get('/api/user/votes/'+this.answer).then(response => {
-//               this.voted = response.data.voted;
-//            })
-            console.log(this.answer);
             axios.post('/api/user/votes/'+this.answer).then(response => {
                 this.voted = response.data.voted;
             })
@@ -26,13 +22,15 @@
         },
         computed: {
             text() {
-                return this.voted ? '已点赞' : '点赞'
+                return this.count;
             }
         },
         methods: {
             vote() {
                 axios.post('/api/user/vote',{'answer':this.answer}).then(response => {
+//                    console.log(response.data);
                     this.voted = response.data.voted;
+                    this.count = response.data.count;
                 })
             }
         }

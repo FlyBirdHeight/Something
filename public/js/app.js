@@ -42375,14 +42375,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = {
-    props: ['answer'],
+    props: ['answer', 'count'],
     mounted: function mounted() {
         var _this = this;
 
-        //            axios.get('/api/user/votes/'+this.answer).then(response => {
-        //               this.voted = response.data.voted;
-        //            })
-        console.log(this.answer);
         axios.post('/api/user/votes/' + this.answer).then(function (response) {
             _this.voted = response.data.voted;
         });
@@ -42395,7 +42391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         text: function text() {
-            return this.voted ? '已点赞' : '点赞';
+            return this.count;
         }
     },
     methods: {
@@ -42403,7 +42399,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.post('/api/user/vote', { 'answer': this.answer }).then(function (response) {
+                //                    console.log(response.data);
                 _this2.voted = response.data.voted;
+                _this2.count = response.data.count;
             });
         }
     }

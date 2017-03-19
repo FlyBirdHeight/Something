@@ -16,7 +16,6 @@ class VotesController extends Controller
     }
 
     public function index($id){
-//        $answer = $this->answer->byId($id);
         $user = Auth::guard('api')->user();
         if($user->hasVotedFor($id)){
             return response()->json(['voted'=>true]);
@@ -24,7 +23,15 @@ class VotesController extends Controller
         return response()->json(['voted'=>false]);
     }
 
-    public function vote(){
-
+    public function vote(Request $request){
+        $userToVote = $this->answer->byId($request->get('answer'));
+        $user = Auth::guard('api')->user();
+        $userVote = $user->voteThis($userToVote->id);
+        if(count($userVote['detached'])!=0){
+            $userToVote->decrement('votes_count');
+            return response()->json(['voted'=>false,'count'=>$userToVote->votes_count]);
+        }
+        $userToVote->increment('votes_count');
+        return response()->json(['voted'=>true,'count'=>$userToVote->votes_count]);
     }
 }
